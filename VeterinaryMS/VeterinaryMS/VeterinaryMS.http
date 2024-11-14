@@ -1,0 +1,6 @@
+@VeterinaryMS_HostAddress = http://localhost:5078
+
+GET {{VeterinaryMS_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
