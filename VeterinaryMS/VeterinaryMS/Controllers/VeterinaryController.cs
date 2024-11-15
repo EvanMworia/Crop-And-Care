@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using VeterinaryMS.Models;
 using VeterinaryMS.Models.DTOs;
 using VeterinaryMS.Services.IService;
 
@@ -38,6 +39,31 @@ namespace VeterinaryMS.Controllers
             catch (Exception ex)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
+
+        }
+
+        [HttpGet]
+        public async Task<ActionResult<List<Veterinary>>> GetAllVets()
+        {
+            try
+            {
+                var result = await _vetService.GetAllVets();
+                return Ok(result);
+
+            }
+            catch (ApplicationException ex)
+            {
+
+                return StatusCode(500, new
+                {
+                    message = ex.Message,
+                    innerException = ex.InnerException?.Message // Safely access the inner exception
+                });
+            }
+            catch (Exception ex)
+            { 
+                return StatusCode(500, new { message = ex.Message, innerException = ex.InnerException?.Message });
             }
 
         }

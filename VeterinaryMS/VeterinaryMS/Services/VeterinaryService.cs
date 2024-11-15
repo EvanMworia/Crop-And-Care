@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using VeterinaryMS.Data;
 using VeterinaryMS.Models;
 using VeterinaryMS.Models.DTOs;
@@ -45,9 +46,18 @@ namespace VeterinaryMS.Services
             throw new NotImplementedException();
         }
 
-        public Task<List<Veterinary>> GetAllVets()
+        public async Task<List<Veterinary>> GetAllVets()
         {
-            throw new NotImplementedException();
+            try
+            {
+                return await _context.Veterinaries.ToListAsync();
+
+            }
+            catch (Exception ex)
+            {
+
+                throw new ApplicationException("An Error Occurred in the Service layer while Fetching Vets", ex.InnerException);
+            }
         }
 
         public Task<Veterinary> GetVetById(Guid id)
