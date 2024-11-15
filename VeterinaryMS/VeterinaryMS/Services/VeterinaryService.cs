@@ -60,9 +60,18 @@ namespace VeterinaryMS.Services
             }
         }
 
-        public Task<Veterinary> GetVetById(Guid id)
+        public async Task<Veterinary> GetVetById(Guid id)
         {
-            throw new NotImplementedException();
+            
+                var result = await _context.Veterinaries.FindAsync(id);
+                if (result == null)
+                {
+                //tests for a null result, if result is null throw an exception that will bubble up to the controller and handled there
+                    throw new KeyNotFoundException($"No Vet was found with the id '{id}' you provided.");
+                }
+                return result;
+
+            
         }
 
         public Task<List<Veterinary>> GetVetsByLocation(LocationDTO locationDTO)

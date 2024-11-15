@@ -67,5 +67,27 @@ namespace VeterinaryMS.Controllers
             }
 
         }
+        [HttpGet("GetSpecificVet/{id:guid}")]
+        public async Task<ActionResult<Veterinary>> GetVetById(Guid id)
+        {
+            try
+            {
+                var vetFound = await _vetService.GetVetById(id);
+                
+                return Ok(vetFound);
+
+            }
+            //The exception that was thrown in the service layer is bein handled here
+            catch (KeyNotFoundException ex)
+            {
+
+                return NotFound(new {message = ex.Message});
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = ex.Message, innerException = ex.InnerException?.Message });
+            }
+
+        }
     }
 }
