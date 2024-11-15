@@ -8,7 +8,7 @@ namespace VeterinaryMS.Services.IService
         Task<ResponseDTO> AddVet(AddVetDTO veterinaryDTO);
         Task<List<Veterinary>> GetAllVets();
         Task<Veterinary> GetVetById(Guid id);
-        Task<List<Veterinary>> GetVetsByLocation(LocationDTO locationDTO);
+        Task<List<Veterinary>> GetVetsByLocation(string locationDTO);
         Task<Veterinary> UpdateVetDetails(AddVetDTO veterinaryDTO);
         Task <string> DeleteVetRecord(Guid id);
     }

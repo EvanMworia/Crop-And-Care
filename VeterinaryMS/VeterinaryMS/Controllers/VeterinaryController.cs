@@ -89,5 +89,28 @@ namespace VeterinaryMS.Controllers
             }
 
         }
+        [HttpGet("GetVetsInLocation/{location:alpha}")]
+        public async Task<ActionResult<List<Veterinary>>> GetVetByLocation(string location)
+        {
+            try
+            {
+                var vets = await _vetService.GetVetsByLocation(location);
+
+                if (vets == null || vets.Count == 0)
+                {
+                    return NotFound(new { message = "No vets found for the specified location." });
+                }
+
+                return Ok(vets);
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "An unexpected error occurred.", details = ex.Message });
+            }
+        }
     }
 }

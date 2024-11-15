@@ -74,9 +74,14 @@ namespace VeterinaryMS.Services
             
         }
 
-        public Task<List<Veterinary>> GetVetsByLocation(LocationDTO locationDTO)
+        public async Task<List<Veterinary>> GetVetsByLocation(string locationDTO)
         {
-            throw new NotImplementedException();
+            if (string.IsNullOrWhiteSpace(locationDTO))
+            {
+                throw new ArgumentException("Location cannot be null or empty", nameof(locationDTO));
+            }
+            var trimmedLocation = locationDTO.Trim();
+            return await _context.Veterinaries.Where(vet => vet.PrimaryLocation.ToLower() == locationDTO.ToLower()).ToListAsync();
         }
 
         public Task<Veterinary> UpdateVetDetails(AddVetDTO veterinaryDTO)
