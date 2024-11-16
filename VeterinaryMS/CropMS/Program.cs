@@ -1,4 +1,6 @@
 using CropMS.Data;
+using CropMS.Services;
+using CropMS.Services.IServices;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -25,7 +27,7 @@ builder.Services.AddDbContext<CropDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("CropConnection") ?? throw new InvalidOperationException("Connection string not found"));
 });
 //---------2. VET SERVICES TO THE DI--------
-//builder.Services.AddScoped<IVeterinaryService, VeterinaryService>();
+builder.Services.AddScoped<IFarmService, FarmService>();
 //---------3. AUTOMAPPER ----------
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
